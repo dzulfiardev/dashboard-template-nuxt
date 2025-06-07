@@ -69,7 +69,7 @@
         class="user-information-wrapper flex items-center space-x-5 cursor-pointer hover:bg-gray-200 transition duration-300 p-3 rounded">
         <img src="https://placehold.co/600x400" alt="User Avatar" class="rounded-full w-10 h-10 object-cover">
         <div>
-          <div class="text-gray-800 font-semibold">John Doe</div>
+          <div class="text-gray-800 font-semibold">Dzulfikar</div>
           <div class="text-gray-500 text-sm">Administrator</div>
         </div>
       </div>
