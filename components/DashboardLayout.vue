@@ -1,12 +1,22 @@
 <template>
-  <div :class="[isDarkTheme ? 'dark' : '', 'flex h-screen bg-gray-100']">
+  <div :class="[isDarkTheme ? 'dark' : '', 'flex h-screen bg-gray-100 overflow-hidden']">
 
-    <Sidebar :isSidebarOpen="isSidebarOpen" :dropdownOpen="dropdownOpen" :toggleDropdown="toggleDropdown" />
+    <!-- Overlay for mobile when sidebar is open -->
+    <div 
+      v-if="isSidebarOpen && isMobile" 
+      @click="toggleSidebar"
+      class="fixed inset-0 bg-black bg-opacity-50 z-30 lg:hidden"
+    ></div>
+
+    <Sidebar :isSidebarOpen="isSidebarOpen" :dropdownOpen="dropdownOpen" :toggleDropdown="toggleDropdown" :isMobile="isMobile" />
   
-    <div :class="isSidebarOpen ? 'flex flex-col flex-1 ml-64' : 'flex flex-col flex-1'">
+    <div :class="[
+      'flex flex-col flex-1 transition-all duration-300',
+      isSidebarOpen && !isMobile ? 'ml-64' : 'ml-0'
+    ]">
       <Header :isDarkTheme="isDarkTheme" @toggleSidebar="toggleSidebar" @toggleTheme="toggleTheme" />
 
-      <main class="flex-1 p-6">
+      <main class="flex-1 p-6 overflow-auto">
         <slot></slot>
       </main>
 
@@ -35,9 +45,11 @@ export default defineComponent({
     });
 
     const isSidebarOpen = ref<boolean>(true);
+    const isMobile = ref<boolean>(false);
 
     const handleResize = () => {
-      isSidebarOpen.value = window.innerWidth >= 996;
+      isMobile.value = window.innerWidth < 1024;
+      isSidebarOpen.value = window.innerWidth >= 1024;
     };
 
     onMounted(() => {
@@ -77,6 +89,7 @@ export default defineComponent({
     return {
       dropdownOpen,
       isSidebarOpen,
+      isMobile,
       isDarkTheme,
       toggleSidebar,
       toggleDropdown,

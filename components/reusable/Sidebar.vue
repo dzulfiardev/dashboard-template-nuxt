@@ -1,11 +1,13 @@
 <!-- Sidebar.vue -->
 <template>
   <transition name="slide">
-
-    <!-- Desktop Sidebar -->
-    <aside v-if="isSidebarOpen" class="bg-blue-950 text-gray-300 w-64 p-5 fixed h-full sidebar-layout">
-      <!-- Logo Section -->
-      <div class="mb-10 mt-5">
+    <!-- Sidebar with dynamic positioning for mobile/desktop -->
+    <aside v-if="isSidebarOpen" :class="[
+      'bg-blue-950 text-gray-300 w-64 h-full sidebar-layout flex flex-col',
+      isMobile ? 'fixed z-40' : 'fixed'
+    ]">
+      <!-- Logo Section - Fixed at top -->
+      <div class="flex-shrink-0 p-5 mb-6 mt-5">
         <svg class="text-black dark:text-white block w-auto h-6" width="800" height="200" viewBox="0 0 800 200"
           fill="none" xmlns="http://www.w3.org/2000/svg">
           <path
@@ -26,7 +28,8 @@
         </svg>
       </div>
 
-      <nav>
+      <!-- Scrollable Navigation Container -->
+      <nav class="flex-1 overflow-y-auto px-5 pb-5 scrollbar-thin scrollbar-thumb-blue-700 scrollbar-track-blue-900">
         <div class="mb-10">
           <!-- Menu Title -->
           <div class="text-gray-400 uppercase font-bold mb-4 text-sm">Main</div>
@@ -122,7 +125,31 @@
             <NuxtLink to="/chart" class="hover:text-white font-medium text-gray-300"
               :class="{ 'bg-blue-900': isActive('/chart') }">
               <li class="mb-1 p-2 hover:bg-blue-900 rounded">
-                <i class="fas fa-chart-bar mr-3"></i> Chart
+                <i class="fas fa-chart-bar mr-3"></i> Chart 1
+              </li>
+            </NuxtLink>
+            <NuxtLink to="/chart" class="hover:text-white font-medium text-gray-300"
+              :class="{ 'bg-blue-900': isActive('/chart') }">
+              <li class="mb-1 p-2 hover:bg-blue-900 rounded">
+                <i class="fas fa-chart-bar mr-3"></i> Chart 2
+              </li>
+            </NuxtLink>
+            <NuxtLink to="/chart" class="hover:text-white font-medium text-gray-300"
+              :class="{ 'bg-blue-900': isActive('/chart') }">
+              <li class="mb-1 p-2 hover:bg-blue-900 rounded">
+                <i class="fas fa-chart-bar mr-3"></i> Chart 3
+              </li>
+            </NuxtLink>
+            <NuxtLink to="/chart" class="hover:text-white font-medium text-gray-300"
+              :class="{ 'bg-blue-900': isActive('/chart') }">
+              <li class="mb-1 p-2 hover:bg-blue-900 rounded">
+                <i class="fas fa-chart-bar mr-3"></i> Chart 4
+              </li>
+            </NuxtLink>
+            <NuxtLink to="/chart" class="hover:text-white font-medium text-gray-300"
+              :class="{ 'bg-blue-900': isActive('/chart') }">
+              <li class="mb-1 p-2 hover:bg-blue-900 rounded">
+                <i class="fas fa-chart-bar mr-3"></i> Chart 5
               </li>
             </NuxtLink>
           </ul>
@@ -146,6 +173,10 @@ export default defineComponent({
   name: 'Sidebar',
   props: {
     isSidebarOpen: {
+      type: Boolean as PropType<boolean>,
+      required: true
+    },
+    isMobile: {
       type: Boolean as PropType<boolean>,
       required: true
     },
@@ -181,5 +212,43 @@ export default defineComponent({
 </script>
 
 <style scoped>
-/* Add any additional styles here */
+/* Custom scrollbar styles */
+.scrollbar-thin {
+  scrollbar-width: thin;
+  scrollbar-color: #1e40af #1e3a8a;
+}
+
+.scrollbar-thin::-webkit-scrollbar {
+  width: 6px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: #1e3a8a;
+  border-radius: 3px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background: #1e40af;
+  border-radius: 3px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb:hover {
+  background: #2563eb;
+}
+
+/* Ensure smooth scrolling */
+nav {
+  scroll-behavior: smooth;
+}
+
+/* Add some padding to prevent content from being hidden behind scrollbar */
+nav::-webkit-scrollbar {
+  width: 8px;
+}
+
+/* Hide scrollbar for Firefox but keep functionality */
+nav {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(59, 130, 246, 0.5) transparent;
+}
 </style>
